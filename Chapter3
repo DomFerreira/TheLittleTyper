@@ -1,9 +1,9 @@
 #lang pie
 ;; Exercise 1
-(claim at-least-two
+(claim at-least-two?
   (-> Nat Atom))  ;; Declare the type: takes a Nat and returns an Atom
 
-(define at-least-two
+(define at-least-two?
   (lambda (n)
     (which-Nat n
       'nil ;; If n = 0, return 'nil
@@ -19,9 +19,10 @@
 (define +
   (lambda (n j)
     (rec-Nat n
-      j
-      (lambda (n-1 sum-n-1)
-        (add1 sum-n-1)))))
+      j ;; Base case: when 'n' is zero, return 'j'.
+      (lambda (n-1 sum-n-1) ;; Recursive step: 'n-1' is the predecessor of 'n',
+        (add1 sum-n-1))))) ;; and 'sum-n-1' is the result of adding 'n-1' and 'j';
+;; increment it by 1 to get the sum of 'n' and 'j'.
 
 ;; Exercise 3
 (claim *
@@ -45,7 +46,7 @@
         (* a exp-a-b-1)))))
 
 ;; Exercise 4
-;; plus : Nat -> Nat -> Nat
+;; plus :: Nat -> Nat -> Nat
 (claim plus (-> Nat Nat Nat))
 (define plus
   (lambda (n j)
@@ -53,8 +54,7 @@
       j
       (lambda (n-1 sum) (add1 sum)))))
 
-;; pred : Nat -> Nat
-;; For our purposes, we define pred such that pred 0 = 0.
+;; pred :: Nat -> Nat
 (claim pred (-> Nat Nat))
 (define pred
   (lambda (n)
@@ -62,7 +62,7 @@
       0
       (lambda (n-1) n-1))))
 
-;; minus : Nat -> Nat -> Nat
+;; minus :: Nat -> Nat -> Nat
 ;; minus a b returns a - b if a ≥ b, and 0 otherwise.
 (claim - (-> Nat Nat Nat))
 (define -
@@ -74,7 +74,7 @@
           0
           (lambda (x) (pred diff)))))))
 
-;; max : Nat -> Nat -> Nat, defined as b + (a - b)
+;; max :: Nat -> Nat -> Nat, defined as b + (a - b)
 (claim max (-> Nat Nat Nat))
 (define max
   (lambda (a b)
@@ -85,16 +85,14 @@
 
 ;; Exercise 6
 (claim step-fact
-  (-> Nat Nat
-    Nat))
+  (-> Nat Nat Nat))
 
 (define step-fact
   (lambda (n-1 almost)
     (* (add1 n-1) almost)))
 
 (claim fact
-  (-> Nat
-    Nat))
+  (-> Nat Nat))
 
 (define fact
   (lambda (n)
